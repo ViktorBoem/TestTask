@@ -1,4 +1,4 @@
-package com.example.testtask.feature_onboarding
+package com.example.testtask.ui.feature_onboarding
 import com.example.testtask.R
 
 data class OnboardingPageData(

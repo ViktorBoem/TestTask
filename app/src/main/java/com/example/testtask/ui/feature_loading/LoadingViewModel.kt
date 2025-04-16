@@ -1,4 +1,4 @@
-package com.example.testtask.feature_loading
+package com.example.testtask.ui.feature_loading
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

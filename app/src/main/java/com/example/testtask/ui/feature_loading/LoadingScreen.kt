@@ -1,4 +1,4 @@
-package com.example.testtask.feature_loading
+package com.example.testtask.ui.feature_loading
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
@@ -11,24 +11,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import  com.example.testtask.components.*
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.testtask.feature_loading.loading_component.CustomProgressBar
+import com.example.testtask.ui.components.CustomProgressBar
 import com.example.testtask.R
+import com.example.testtask.ui.components.PartialCircleBackground
 import com.example.testtask.ui.theme.*
 
 @Composable
 fun LoadingScreen(
     modifier: Modifier = Modifier,
-    onNavigateToHome: () -> Unit,
+    onNavigateToOnboarding: () -> Unit,
     viewModel: LoadingViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(uiState.status) {
         if (uiState.status == InitializationState.Completed) {
-            onNavigateToHome()
+            onNavigateToOnboarding()
         }
     }
 
@@ -42,7 +42,7 @@ fun LoadingScreen(
             .fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            HeightSizedSquareWithRoundedBottom(
+            PartialCircleBackground(
                 modifier = Modifier.fillMaxHeight()
             )
 

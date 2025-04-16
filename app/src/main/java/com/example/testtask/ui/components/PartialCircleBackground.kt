@@ -1,4 +1,4 @@
-package com.example.testtask.components
+package com.example.testtask.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.Constraints
 import kotlin.math.roundToInt
 
 @Composable
-fun HeightSizedSquareWithRoundedBottom(
+fun PartialCircleBackground(
     modifier: Modifier = Modifier,
     color: Color = UraniumBlue,
     bottomCornerPercent: Int = 100

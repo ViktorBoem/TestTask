@@ -1,4 +1,4 @@
-package com.example.testtask.feature_home.components
+package com.example.testtask.ui.feature_home.home_component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

@@ -1,4 +1,4 @@
-package com.example.testtask.feature_home
+package com.example.testtask.ui.feature_home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -11,22 +11,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.*
-import com.example.testtask.feature_home.components.HomePageTopBar
+import com.example.testtask.ui.feature_home.home_component.HomePageTopBar
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.example.testtask.R
-import  com.example.testtask.components.*
-import com.example.testtask.feature_home.components.CircleImageButtonWithGradient
+import com.example.testtask.ui.components.PartialCircleBackground
+import com.example.testtask.ui.feature_home.home_component.CircleImageButtonWithGradient
 import com.example.testtask.ui.theme.*
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    onNavigateToPressureMeasurement : () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Scaffold(
-        modifier = modifier,
-        topBar = { HomePageTopBar() }
+        topBar = { HomePageTopBar() },
+        modifier = modifier
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -41,31 +43,42 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ){
-                HeightSizedSquareWithRoundedBottom(
+                PartialCircleBackground(
                     modifier = Modifier.fillMaxHeight()
                 )
 
                 Column(
                     modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    Text(
-                        text = "Виконайте своє перше вимірювання!",
-                        style = Typography.headlineMedium,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(0.85f)
-                    )
-
-                    Image(
-                        painter = painterResource(id = R.drawable.heart_rate_red),
-                        contentDescription = "Серце з пульсом",
-                        contentScale = ContentScale.Fit,
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth(0.75f)
-                            .weight(3f)
-                    )
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Виконайте своє перше вимірювання!",
+                            style = Typography.headlineMedium,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth(0.85f)
+                        )
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .weight(2f)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.TopCenter
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.heart_rate_red),
+                            contentDescription = "Серце з пульсом",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier.fillMaxWidth(0.75f)
+                        )
+                    }
                 }
             }
 
@@ -79,7 +92,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     primaryColor = CoralPink,
                     secondaryColor = Folly,
                     modifier = Modifier.size(maxHeight * 0.75f),
-                    onClick = { })
+                    onClick = onNavigateToPressureMeasurement)
             }
         }
     }

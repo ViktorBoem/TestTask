@@ -1,4 +1,4 @@
-package com.example.testtask.feature_onboarding
+package com.example.testtask.ui.feature_onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -18,9 +18,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.testtask.components.HeightSizedSquareWithRoundedBottom
+import com.example.testtask.ui.components.PartialCircleBackground
 import kotlinx.coroutines.launch
-import com.example.testtask.feature_onboarding.component.*
+import com.example.testtask.ui.feature_onboarding.onboarding_component.OnboardingPage
+import com.example.testtask.ui.feature_onboarding.onboarding_component.PagerIndicator
 import com.example.testtask.ui.theme.*
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -43,7 +44,7 @@ fun OnBoardingScreen(
             .fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            HeightSizedSquareWithRoundedBottom(
+            PartialCircleBackground(
                 modifier = Modifier.fillMaxHeight()
             )
 

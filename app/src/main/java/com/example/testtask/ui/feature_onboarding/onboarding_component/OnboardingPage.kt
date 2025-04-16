@@ -1,4 +1,4 @@
-package com.example.testtask.feature_onboarding.component
+package com.example.testtask.ui.feature_onboarding.onboarding_component
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
@@ -10,8 +10,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.testtask.ui.theme.*
-import com.example.testtask.feature_onboarding.*
 import androidx.compose.ui.unit.dp
+import com.example.testtask.ui.feature_onboarding.OnboardingPageData
 
 @Composable
 fun OnboardingPage(

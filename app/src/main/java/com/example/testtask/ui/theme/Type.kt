@@ -34,6 +34,14 @@ val Typography = Typography(
         letterSpacing = 0.sp
     ),
 
+    titleSmall = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.sp
+    ),
+
     titleLarge = TextStyle(
         fontFamily = Rubik,
         fontWeight = FontWeight.SemiBold,
@@ -64,5 +72,13 @@ val Typography = Typography(
         fontSize = 54.sp,
         lineHeight = 51.sp,
         letterSpacing = 0.sp
-    )
+    ),
+
+    displayLarge = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.Bold,
+        fontSize = 74.sp,
+        lineHeight = 62.sp,
+        letterSpacing = 0.sp
+    ),
 )

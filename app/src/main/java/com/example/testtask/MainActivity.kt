@@ -10,9 +10,11 @@ import com.example.testtask.ui.theme.TestTaskTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.testtask.feature_home.HomeScreen
-import com.example.testtask.feature_loading.LoadingScreen
-import com.example.testtask.feature_onboarding.OnBoardingScreen
+import com.example.testtask.ui.feature_home.HomeScreen
+import com.example.testtask.ui.feature_loading.LoadingScreen
+import com.example.testtask.ui.feature_onboarding.OnBoardingScreen
+import com.example.testtask.ui.feature_pulse_measurement.PressureMeasurementScreen
+import com.example.testtask.ui.feature_result.result_component.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,16 +32,12 @@ class MainActivity : ComponentActivity() {
                 {
                     composable(route = "loading") {
                         LoadingScreen(
-                            onNavigateToHome = {
+                            onNavigateToOnboarding = {
                                 navController.navigate("onboarding") {
                                     popUpTo("loading") { inclusive = true }
                                 }
                             }
                         )
-                    }
-
-                    composable(route = "home") {
-                        HomeScreen()
                     }
 
                     composable(route = "onboarding") {
@@ -48,6 +46,27 @@ class MainActivity : ComponentActivity() {
                                 popUpTo("onboarding") { inclusive = true }
                             }
                         })
+                    }
+
+                    composable(route = "home") {
+                        HomeScreen(onNavigateToPressureMeasurement = {
+                            navController.navigate("pressureMeasurement") { }
+                        })
+                    }
+
+                    composable(route = "pressureMeasurement") {
+                        PressureMeasurementScreen(
+                            onNavigateBack = {
+                                navController.popBackStack()
+                            },
+
+                            onNavigationResult = {
+                                navController.navigate("result")
+                            })
+                    }
+
+                    composable(route = "result") {
+                        ResultScreen()
                     }
                 }
             }

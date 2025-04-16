@@ -1,4 +1,4 @@
-package com.example.testtask.feature_onboarding.component
+package com.example.testtask.ui.feature_onboarding.onboarding_component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background

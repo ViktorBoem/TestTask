@@ -1,4 +1,4 @@
-package com.example.testtask.feature_loading.loading_component
+package com.example.testtask.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.border
@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap.Companion.Butt
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlin.math.roundToInt
 import com.example.testtask.ui.theme.*
@@ -21,7 +22,8 @@ fun CustomProgressBar(
     progress: Float,
     progressColor: Color = LightRed,
     trackColor: Color = Melon,
-    textColor: Color = Color.White
+    textColor: Color = Color.White,
+    height: Dp = 14.dp
 ) {
     Box(
         modifier = modifier,
@@ -31,7 +33,7 @@ fun CustomProgressBar(
             progress = { progress },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(14.dp)
+                .height(height)
                 .clip(CircleShape)
                 .border(
                     width = 1.dp,
