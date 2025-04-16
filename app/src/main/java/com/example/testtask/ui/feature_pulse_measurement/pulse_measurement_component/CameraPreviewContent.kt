@@ -61,13 +61,11 @@ fun CameraPreviewContent(
         val pulseAnalyzer = PulseAnalyzer(
             onBpmUpdate = { bpm ->
                 coroutineScope.launch {
-                    Log.d("CameraPreview", "BPM update: $bpm")
                     viewModel.onBpmUpdate(bpm)
                 }
             },
             onFingerDetectionChange = { isDetected ->
                 coroutineScope.launch {
-                    Log.d("CameraPreview", "Finger detected: $isDetected")
                     viewModel.onFingerDetectionChange(isDetected)
                 }
             },
@@ -97,7 +95,6 @@ fun CameraPreviewContent(
                 }
 
             } catch (exc: Exception) {
-                Log.e("CameraPreview", "Use case binding failed", exc)
                 camera = null
             }
         }

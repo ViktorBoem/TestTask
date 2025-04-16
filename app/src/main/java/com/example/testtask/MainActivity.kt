@@ -14,7 +14,7 @@ import com.example.testtask.ui.feature_home.HomeScreen
 import com.example.testtask.ui.feature_loading.LoadingScreen
 import com.example.testtask.ui.feature_onboarding.OnBoardingScreen
 import com.example.testtask.ui.feature_pulse_measurement.PressureMeasurementScreen
-import com.example.testtask.ui.feature_result.result_component.*
+import com.example.testtask.ui.feature_result.ResultScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
