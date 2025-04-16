@@ -42,6 +42,22 @@ val Typography = Typography(
         letterSpacing = 0.sp
     ),
 
+    headlineMedium = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.Bold,
+        fontSize = 28.sp,
+        lineHeight = 32.sp,
+        letterSpacing = 0.sp
+    ),
+
+    headlineLarge = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 32.sp,
+        lineHeight = 36.sp,
+        letterSpacing = 0.sp
+    ),
+
     displayMedium = TextStyle(
         fontFamily = Rubik,
         fontWeight = FontWeight.Bold,

@@ -16,6 +16,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.testtask.components.HeightSizedSquareWithRoundedBottom
 import kotlinx.coroutines.launch
@@ -79,7 +80,7 @@ fun OnBoardingScreen(
                     }
                 },
                 modifier = Modifier
-                    .fillMaxWidth(0.75f)
+                    .fillMaxWidth(0.9f)
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = LightRed
@@ -87,7 +88,8 @@ fun OnBoardingScreen(
             ) {
                 Text(
                     if (pagerState.currentPage < pageCount - 1) "Продовжити" else "Почати!",
-                    style = Typography.bodyLarge
+                    style = Typography.bodyLarge,
+                    fontWeight = FontWeight.SemiBold
                 )
             }
         }

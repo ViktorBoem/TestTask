@@ -14,7 +14,7 @@ import kotlin.math.roundToInt
 @Composable
 fun HeightSizedSquareWithRoundedBottom(
     modifier: Modifier = Modifier,
-    color: Color = UranianBlue,
+    color: Color = UraniumBlue,
     bottomCornerPercent: Int = 100
 ) {
     val shape = RoundedCornerShape(
