@@ -1,6 +1,7 @@
 package com.example.testtask.ui.feature_pulse_measurement
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -28,6 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.testtask.R
@@ -45,7 +47,7 @@ fun PressureMeasurementScreen(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
     onNavigationResult: () -> Unit,
-    viewModel: PulseMeasurementViewModel = viewModel()
+    viewModel: PulseMeasurementViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 

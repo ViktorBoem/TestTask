@@ -10,9 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.example.testtask.ui.theme.*
-import com.example.testtask.R
 import androidx.compose.material3.*
 import androidx.compose.ui.unit.dp
+import com.example.testtask.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

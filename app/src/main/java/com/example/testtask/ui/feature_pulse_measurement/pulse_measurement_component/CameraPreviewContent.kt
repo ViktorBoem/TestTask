@@ -15,9 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.runtime.*
-import android.util.Log
 import androidx.camera.core.Camera
-import androidx.lifecycle.LifecycleOwner
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -29,7 +28,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun CameraPreviewContent(
     modifier: Modifier = Modifier,
-    viewModel: PulseMeasurementViewModel = viewModel()
+    viewModel: PulseMeasurementViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -37,7 +36,7 @@ fun CameraPreviewContent(
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
     val previewView = remember {
         PreviewView(context).apply {
-            this.scaleType = PreviewView.ScaleType.FILL_CENTER
+            scaleType = PreviewView.ScaleType.FILL_CENTER
         }
     }
 
@@ -45,9 +44,8 @@ fun CameraPreviewContent(
     val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
     val coroutineScope = rememberCoroutineScope()
 
-    DisposableEffect(key1 = cameraProviderFuture, key2 = lifecycleOwner, key3 = cameraSelector) {
+    DisposableEffect(lifecycleOwner) {
         val executor = ContextCompat.getMainExecutor(context)
-        var cameraProvider: ProcessCameraProvider? = null
 
         val previewUseCase = Preview.Builder().build().also {
             it.surfaceProvider = previewView.surfaceProvider
@@ -74,61 +72,41 @@ fun CameraPreviewContent(
 
         imageAnalysisUseCase.setAnalyzer(cameraExecutor, pulseAnalyzer)
 
-        fun bindPreview(owner: LifecycleOwner, provider: ProcessCameraProvider) {
-            try {
-                provider.unbindAll()
+        fun bindCamera(provider: ProcessCameraProvider) {
+            provider.unbindAll()
+            camera = provider.bindToLifecycle(
+                lifecycleOwner,
+                cameraSelector,
+                previewUseCase,
+                imageAnalysisUseCase
+            )
 
-                camera = provider.bindToLifecycle(
-                    owner,
-                    cameraSelector,
-                    previewUseCase,
-                    imageAnalysisUseCase
-                )
-
-                camera?.let { cam ->
-                    if (cam.cameraInfo.hasFlashUnit()) {
-                        cam.cameraControl.enableTorch(true)
-                        Log.d("CameraPreview", "Torch enabled")
-                    } else {
-                        Log.d("CameraPreview", "No flash unit available")
-                    }
+            camera?.cameraInfo?.hasFlashUnit()?.let { hasFlash ->
+                if (hasFlash) {
+                    camera?.cameraControl?.enableTorch(true)
                 }
-
-            } catch (exc: Exception) {
-                camera = null
             }
         }
 
         cameraProviderFuture.addListener({
-            try {
-                cameraProvider = cameraProviderFuture.get()
-                cameraProvider?.let { provider ->
-                    bindPreview(lifecycleOwner, provider)
-                }
-            } catch (e: Exception) {
-                Log.e("CameraPreview", "Camera provider listener failed", e)
+            cameraProviderFuture.get()?.let { provider ->
+                bindCamera(provider)
             }
         }, executor)
 
         onDispose {
-            try {
-                camera?.let { cam ->
-                    if (cam.cameraInfo.hasFlashUnit()) {
-                        cam.cameraControl.enableTorch(false)
-                    }
+            camera?.cameraInfo?.hasFlashUnit()?.let { hasFlash ->
+                if (hasFlash) {
+                    camera?.cameraControl?.enableTorch(false)
                 }
-
-                cameraProvider?.unbindAll()
-                cameraExecutor.shutdown()
-            } catch (e: Exception) {
-                Log.e("CameraPreview", "Cleanup failed", e)
             }
+            cameraProviderFuture.get()?.unbindAll()
+            cameraExecutor.shutdown()
         }
     }
 
     AndroidView(
         factory = { previewView },
-        modifier = modifier
-            .clip(CircleShape)
+        modifier = modifier.clip(CircleShape)
     )
 }

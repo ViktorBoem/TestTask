@@ -8,6 +8,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.sp
 import com.example.testtask.R
 
+
 val Rubik = FontFamily(
     Font(R.font.rubik_black, FontWeight.Black),
     Font(R.font.rubik_regular, FontWeight.Normal),
@@ -17,6 +18,14 @@ val Rubik = FontFamily(
 )
 
 val Typography = Typography(
+
+    bodySmall = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 18.sp,
+        letterSpacing = 0.sp
+    ),
 
     bodyMedium = TextStyle(
         fontFamily = Rubik,
@@ -39,6 +48,14 @@ val Typography = Typography(
         fontWeight = FontWeight.SemiBold,
         fontSize = 18.sp,
         lineHeight = 24.sp,
+        letterSpacing = 0.sp
+    ),
+
+    titleMedium = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 22.sp,
+        lineHeight = 26.sp,
         letterSpacing = 0.sp
     ),
 

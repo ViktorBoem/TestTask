@@ -1,8 +1,9 @@
 package com.example.testtask.ui.feature_pulse_measurement
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.testtask.data.repository.PulseRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
+import javax.inject.Inject
 
 enum class MeasurementStatus {
     DetectingFinger,
@@ -26,7 +28,10 @@ data class PulseUiState(
     val progress: Float = 0.0f
 )
 
-class PulseMeasurementViewModel : ViewModel() {
+@HiltViewModel
+class PulseMeasurementViewModel @Inject constructor(
+    private val pulseRepository: PulseRepository
+) : ViewModel() {
 
     companion object {
         private const val TOTAL_MEASUREMENT_TIME_MS = 75_000L
@@ -37,10 +42,13 @@ class PulseMeasurementViewModel : ViewModel() {
     val uiState: StateFlow<PulseUiState> = _uiState.asStateFlow()
 
     private var measurementJob: Job? = null
+    private var lastValidBpm: Int = 0
 
     fun onFingerDetectionChange(isFingerDetected: Boolean) {
         if (isFingerDetected) {
             if (_uiState.value.status != MeasurementStatus.MeasurementPulse) {
+                lastValidBpm = 0
+
                 startMeasurementTimer()
 
                 _uiState.update {
@@ -54,26 +62,26 @@ class PulseMeasurementViewModel : ViewModel() {
             }
         }
         else {
-            stopMeasurementTimer()
+            if (_uiState.value.status == MeasurementStatus.MeasurementPulse) {
+                stopMeasurementTimer()
 
-            _uiState.update {
-                it.copy(
-                    status = MeasurementStatus.DetectingFinger,
-                    title = "Палець не виявлено Блять",
-                    subtitle = "Щільно прикладіть палець до камери",
-                    bpmValue = "--",
-                    progress = 0.0f
-                )
+                _uiState.update {
+                    it.copy(
+                        status = MeasurementStatus.DetectingFinger,
+                        title = "Палець не виявлено",
+                        subtitle = "Щільно прикладіть палець до камери",
+                        bpmValue = "--",
+                        progress = 0.0f
+                    )
+                }
             }
         }
     }
 
     private fun startMeasurementTimer() {
         measurementJob?.cancel()
-
         measurementJob = viewModelScope.launch {
             val startTime = System.currentTimeMillis()
-
             while (isActive) {
                 val elapsedTime = System.currentTimeMillis() - startTime
                 val currentProgress = (elapsedTime.toFloat() / TOTAL_MEASUREMENT_TIME_MS).coerceIn(0.0f, 1.0f)
@@ -91,37 +99,46 @@ class PulseMeasurementViewModel : ViewModel() {
     }
 
     private fun stopMeasurementTimer() {
-        if (measurementJob?.isActive == true) {
-            measurementJob?.cancel()
-        }
-
+        measurementJob?.cancel()
         measurementJob = null
     }
 
     private fun onMeasurementComplete() {
         stopMeasurementTimer()
 
-        _uiState.update {
-            it.copy(
-                status = MeasurementStatus.MeasurementCompleted
-            )
+        val bpmToSave = lastValidBpm
+        val timestamp = System.currentTimeMillis()
+
+        if (bpmToSave > 0) {
+            viewModelScope.launch {
+                pulseRepository.savePulseRecord(bpmToSave, timestamp)
+
+                _uiState.update {
+                    it.copy(status = MeasurementStatus.MeasurementCompleted)
+                }
+            }
+        }
+        else {
+            _uiState.update {
+                it.copy(status = MeasurementStatus.MeasurementCompleted)
+            }
         }
     }
 
     fun onBpmUpdate(bpm: Int) {
         if (_uiState.value.status == MeasurementStatus.MeasurementPulse) {
-            viewModelScope.launch {
-                val bpmText = if (bpm > 0) {
-                    bpm.toString()
-                }
-                else {
-                    _uiState.value.bpmValue
-                }
-                if (bpm > 0) {
-                    _uiState.update {
-                        it.copy(bpmValue = bpmText)
-                    }
-                }
+            val bpmText: String
+
+            if (bpm > 0) {
+                lastValidBpm = bpm
+                bpmText = bpm.toString()
+            }
+            else {
+                bpmText = _uiState.value.bpmValue
+            }
+
+            _uiState.update {
+                it.copy(bpmValue = bpmText)
             }
         }
     }

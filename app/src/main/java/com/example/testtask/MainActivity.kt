@@ -15,7 +15,9 @@ import com.example.testtask.ui.feature_loading.LoadingScreen
 import com.example.testtask.ui.feature_onboarding.OnBoardingScreen
 import com.example.testtask.ui.feature_pulse_measurement.PressureMeasurementScreen
 import com.example.testtask.ui.feature_result.ResultScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

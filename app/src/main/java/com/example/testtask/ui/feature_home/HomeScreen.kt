@@ -1,5 +1,6 @@
 package com.example.testtask.ui.feature_home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.example.testtask.R
 import com.example.testtask.ui.components.PartialCircleBackground
 import com.example.testtask.ui.feature_home.home_component.CircleImageButtonWithGradient
@@ -82,7 +84,7 @@ fun HomeScreen(
                 }
             }
 
-            BoxWithConstraints(modifier = Modifier
+            Box(modifier = Modifier
                 .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
@@ -91,7 +93,7 @@ fun HomeScreen(
                     contentDescription = "Серце з пульсом",
                     primaryColor = CoralPink,
                     secondaryColor = Folly,
-                    modifier = Modifier.size(maxHeight * 0.75f),
+                    modifier = Modifier.size(150.dp * 0.75f),
                     onClick = onNavigateToPressureMeasurement)
             }
         }

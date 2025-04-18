@@ -14,8 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun CameraScreen(modifier: Modifier = Modifier,
-                 viewModel: PulseMeasurementViewModel = viewModel())
+fun CameraScreen(modifier: Modifier = Modifier)
 {
     val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
 

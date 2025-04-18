@@ -41,8 +41,7 @@ fun ResultTopAppBar(modifier: Modifier = Modifier) {
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = LightRed,
-            titleContentColor = LightRed,
-            actionIconContentColor = LightRed
+            titleContentColor = White
         ),
         modifier = modifier
     )
