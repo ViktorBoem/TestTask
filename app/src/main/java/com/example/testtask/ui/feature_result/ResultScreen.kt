@@ -2,8 +2,7 @@ package com.example.testtask.ui.feature_result
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
@@ -13,34 +12,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.text.font.FontWeight
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.testtask.ui.components.PartialCircleBackground
 import com.example.testtask.ui.feature_result.result_component.*
 import com.example.testtask.ui.theme.*
+import com.example.testtask.ui.components.*
 
+//підозрюю тут варто б розділити всі можливі предсталення стану на різні функції...
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ResultScreen(
     modifier: Modifier = Modifier,
     viewModel: ResultViewModel = hiltViewModel(),
-    onDoneClick: () -> Unit = {}
+    onNavigateToHome: () -> Unit = {},
+    onNavigateToHistory: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = { ResultTopAppBar() },
+        topBar = { ResultTopAppBar(onNavigateToHistory = onNavigateToHistory) },
         modifier = modifier,
-    ) { paddingValues ->
+    ) { _ ->
 
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
+            modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             when {
@@ -51,8 +50,7 @@ fun ResultScreen(
                     Text(
                         text = "Помилка: ${uiState.error}",
                         color = Red,
-                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
+                        textAlign = TextAlign.Center
                     )
                 }
 
@@ -102,7 +100,6 @@ fun ResultScreen(
 
                                     Text(
                                         text = when {
-                                            valueBPM == 0 && uiState.error == null -> "Не визначено"
                                             valueBPM < 60 -> "Уповільнений"
                                             valueBPM in 60..100 -> "Звичайний"
                                             valueBPM > 100 -> "Прискорений"
@@ -110,7 +107,6 @@ fun ResultScreen(
                                         },
                                         style = Typography.headlineMedium,
                                         color = when {
-                                            valueBPM == 0 && uiState.error == null -> DimGray
                                             valueBPM < 60 -> RobinEggBlue
                                             valueBPM in 60..100 -> Aquamarine
                                             valueBPM > 100 -> BitterSweet
@@ -123,8 +119,7 @@ fun ResultScreen(
                                     )
 
                                     ResultDateTimeDisplay(
-                                        timeString = uiState.formattedTime,
-                                        dateString = uiState.formattedDate,
+                                        timestampMillis = uiState.timestamp,
                                         modifier = Modifier.constrainAs(dataField) {
                                             baseline.linkTo(textTitle.baseline)
                                             end.linkTo(parent.end)
@@ -216,27 +211,22 @@ fun ResultScreen(
                             }
                         }
 
-                        Box(
+                        Column(
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxWidth(),
-                            contentAlignment = Alignment.Center
+                            verticalArrangement = Arrangement.Top,
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Button(
-                                onClick = onDoneClick,
+                            Spacer(modifier = Modifier.weight(1f))
+
+                            SuperStylePrimaryActionButton(
+                                text = "Готово",
+                                onClick = onNavigateToHome,
                                 modifier = Modifier
+                                    .weight(1.5f,false)
                                     .fillMaxWidth(0.9f)
-                                    .height(50.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = LightRed
-                                )
-                            ) {
-                                Text(
-                                    "Готово",
-                                    style = Typography.bodyLarge,
-                                    fontWeight = FontWeight.SemiBold
-                                )
-                            }
+                            )
                         }
                     }
                 }

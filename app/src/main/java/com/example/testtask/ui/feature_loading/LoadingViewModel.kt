@@ -9,18 +9,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.math.min
+import com.example.testtask.ui.feature_loading.loading_data_object.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-data class LoadingUiState(
-    val progress: Float = 0.0f,
-    val status: InitializationState = InitializationState.Initializing
-)
-
-enum class InitializationState {
-    Initializing,
-    Completed
-}
-
-class LoadingViewModel : ViewModel() {
+@HiltViewModel
+class LoadingViewModel @Inject constructor(): ViewModel() {
     private val _uiState = MutableStateFlow(LoadingUiState())
     val uiState: StateFlow<LoadingUiState> = _uiState.asStateFlow()
 

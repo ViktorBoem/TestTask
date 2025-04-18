@@ -1,7 +1,6 @@
 package com.example.testtask.ui.feature_pulse_measurement
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -31,10 +30,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.testtask.R
 import com.example.testtask.ui.components.CustomProgressBar
 import com.example.testtask.ui.components.PartialCircleBackground
+import com.example.testtask.ui.feature_pulse_measurement.measurment_data_object.*
 import com.example.testtask.ui.feature_pulse_measurement.pulse_measurement_component.CameraScreen
 import com.example.testtask.ui.feature_pulse_measurement.pulse_measurement_component.PressureMeasurementTopBar
 import com.example.testtask.ui.theme.ArgentianBlue

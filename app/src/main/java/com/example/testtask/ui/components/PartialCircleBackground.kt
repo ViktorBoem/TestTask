@@ -27,12 +27,12 @@ fun PartialCircleBackground(
     Layout(
         content = {
             Box(
-                modifier = Modifier
-                    .background(color = color, shape = shape)
+                modifier = Modifier.background(color = color, shape = shape)
             )
         },
         modifier = modifier
     ) { measurables, constraints ->
+
         val height = maxOf(constraints.maxHeight, constraints.maxWidth)
         val width = (height * 1.25).roundToInt()
 

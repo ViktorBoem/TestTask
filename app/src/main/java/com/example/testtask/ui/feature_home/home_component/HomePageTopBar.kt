@@ -1,6 +1,7 @@
 package com.example.testtask.ui.feature_home.home_component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,7 +17,9 @@ import com.example.testtask.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomePageTopBar(modifier: Modifier = Modifier) {
+fun HomePageTopBar(modifier: Modifier = Modifier,
+                   onNavigateToHistory : () -> Unit
+) {
     TopAppBar(
         title = { },
         actions = {
@@ -24,7 +27,8 @@ fun HomePageTopBar(modifier: Modifier = Modifier) {
                 Text(
                     text = "Історія",
                     style = Typography.titleLarge,
-                    color = White
+                    color = White,
+                    modifier = Modifier.clickable{ onNavigateToHistory() }
                 )
 
                 Spacer(modifier = Modifier.width(12.dp))
@@ -32,8 +36,10 @@ fun HomePageTopBar(modifier: Modifier = Modifier) {
                 Image(
                     painter = painterResource(id = R.drawable.time_machine),
                     contentDescription = "іконка історії",
-                    modifier = Modifier.fillMaxHeight(0.6f),
-                    contentScale = ContentScale.Fit
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .fillMaxHeight(0.6f)
+                        .clickable{ onNavigateToHistory() }
                 )
 
                 Spacer(modifier = Modifier.width(4.dp))
@@ -41,8 +47,7 @@ fun HomePageTopBar(modifier: Modifier = Modifier) {
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = LightRed,
-            titleContentColor = LightRed,
-            actionIconContentColor = LightRed
+            titleContentColor = White
         ),
         modifier = modifier
     )

@@ -8,6 +8,7 @@ import android.graphics.Rect
 import android.graphics.YuvImage
 import androidx.camera.core.ImageProxy
 import java.io.ByteArrayOutputStream
+import androidx.core.graphics.get
 
 class ImageProcessor {
     private val smoothingWindow = ArrayList<Float>()
@@ -62,7 +63,7 @@ class ImageProcessor {
         for (y in centerHeight - sampleRadius until centerHeight + sampleRadius) {
             for (x in centerWidth - sampleRadius until centerWidth + sampleRadius) {
                 if (y >= 0 && y < height && x >= 0 && x < width) {
-                    val pixel = bitmap.getPixel(x, y)
+                    val pixel = bitmap[x, y]
                     redSum += Color.red(pixel)
                     count++
                 }

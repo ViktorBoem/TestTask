@@ -1,6 +1,5 @@
 package com.example.testtask.ui.theme
 
-import android.hardware.camera2.params.BlackLevelPattern
 import androidx.compose.ui.graphics.Color
 
 val Purple40 = Color(0xFF6650a4)

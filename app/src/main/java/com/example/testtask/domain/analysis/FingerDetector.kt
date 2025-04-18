@@ -2,6 +2,7 @@ package com.example.testtask.domain.analysis
 
 import android.graphics.Bitmap
 import android.graphics.Color
+import androidx.core.graphics.get
 
 class FingerDetector {
     companion object {
@@ -31,7 +32,7 @@ class FingerDetector {
 
         for (y in 0 until height step sampleSizeY) {
             for (x in 0 until width step sampleSizeX) {
-                val pixel = bitmap.getPixel(x, y)
+                val pixel = bitmap[x, y]
 
                 val r = Color.red(pixel)
                 val g = Color.green(pixel)

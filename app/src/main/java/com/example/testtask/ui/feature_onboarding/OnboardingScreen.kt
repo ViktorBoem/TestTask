@@ -9,20 +9,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.example.testtask.ui.components.PartialCircleBackground
+import com.example.testtask.ui.components.SuperStylePrimaryActionButton
 import kotlinx.coroutines.launch
 import com.example.testtask.ui.feature_onboarding.onboarding_component.OnboardingPage
 import com.example.testtask.ui.feature_onboarding.onboarding_component.PagerIndicator
-import com.example.testtask.ui.theme.*
+import com.example.testtask.ui.feature_onboarding.onboarding_data_object.*
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -59,40 +55,29 @@ fun OnBoardingScreen(
         Column(modifier = Modifier
             .weight(1f)
             .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PagerIndicator(
                 pagerState = pagerState,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.weight(1f)
             )
 
-            Spacer(Modifier.height(32.dp))
-
-            Button(
+            SuperStylePrimaryActionButton(
+                text = if (pagerState.currentPage < pageCount - 1) "Продовжити" else "Почати!",
                 onClick = {
                     scope.launch {
                         if (pagerState.currentPage < pageCount - 1) {
                             pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                        }
-                        else {
+                        } else {
                             onNavigateToHome()
                         }
                     }
                 },
                 modifier = Modifier
+                    .weight(1.5f, fill = false)
                     .fillMaxWidth(0.9f)
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = LightRed
-                )
-            ) {
-                Text(
-                    if (pagerState.currentPage < pageCount - 1) "Продовжити" else "Почати!",
-                    style = Typography.bodyLarge,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
+            )
         }
     }
 }

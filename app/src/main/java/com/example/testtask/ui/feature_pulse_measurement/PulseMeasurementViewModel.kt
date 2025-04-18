@@ -2,7 +2,8 @@ package com.example.testtask.ui.feature_pulse_measurement
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.testtask.data.repository.PulseRepository
+import com.example.testtask.domain.repository.IPulseRepository
+import com.example.testtask.ui.feature_pulse_measurement.measurment_data_object.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,23 +15,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import javax.inject.Inject
 
-enum class MeasurementStatus {
-    DetectingFinger,
-    MeasurementPulse,
-    MeasurementCompleted
-}
-
-data class PulseUiState(
-    val status: MeasurementStatus = MeasurementStatus.DetectingFinger,
-    val title: String = "Палець не виявлено",
-    val subtitle: String = "Щільно прикладіть палець до камери",
-    val bpmValue: String = "--",
-    val progress: Float = 0.0f
-)
-
 @HiltViewModel
 class PulseMeasurementViewModel @Inject constructor(
-    private val pulseRepository: PulseRepository
+    private val pulseRepository: IPulseRepository
 ) : ViewModel() {
 
     companion object {
@@ -80,6 +67,7 @@ class PulseMeasurementViewModel @Inject constructor(
 
     private fun startMeasurementTimer() {
         measurementJob?.cancel()
+
         measurementJob = viewModelScope.launch {
             val startTime = System.currentTimeMillis()
             while (isActive) {
@@ -120,7 +108,13 @@ class PulseMeasurementViewModel @Inject constructor(
         }
         else {
             _uiState.update {
-                it.copy(status = MeasurementStatus.MeasurementCompleted)
+                it.copy(
+                    status = MeasurementStatus.DetectingFinger,
+                    title = "Спробуйте ще раз",
+                    subtitle = "Щільно прикладіть палець до камери",
+                    bpmValue = "--",
+                    progress = 0.0f
+                )
             }
         }
     }

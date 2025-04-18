@@ -11,7 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.testtask.ui.theme.*
 import androidx.compose.ui.unit.dp
-import com.example.testtask.ui.feature_onboarding.OnboardingPageData
+import com.example.testtask.ui.feature_onboarding.onboarding_data_object.OnboardingPageData
 
 @Composable
 fun OnboardingPage(

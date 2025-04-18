@@ -11,18 +11,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.testtask.ui.components.CustomProgressBar
 import com.example.testtask.R
 import com.example.testtask.ui.components.PartialCircleBackground
+import com.example.testtask.ui.feature_loading.loading_data_object.InitializationState
 import com.example.testtask.ui.theme.*
 
 @Composable
 fun LoadingScreen(
     modifier: Modifier = Modifier,
     onNavigateToOnboarding: () -> Unit,
-    viewModel: LoadingViewModel = viewModel()
+    viewModel: LoadingViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 

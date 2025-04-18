@@ -22,6 +22,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "pulse_database"
                 ).build()
+
                 INSTANCE = instance
                 instance
             }

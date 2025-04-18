@@ -14,4 +14,10 @@ interface PulseRecordDao {
 
     @Query("SELECT * FROM pulse_records ORDER BY timestamp DESC LIMIT 1")
     fun getLatestPulseRecord(): Flow<PulseRecord?>
+
+    @Query("SELECT * FROM pulse_records ORDER BY timestamp DESC")
+    fun getAllPulseRecords(): Flow<List<PulseRecord>>
+
+    @Query("DELETE FROM pulse_records")
+    suspend fun deleteAllPulseRecords()
 }

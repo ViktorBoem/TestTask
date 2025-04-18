@@ -83,6 +83,14 @@ val Typography = Typography(
         letterSpacing = 0.sp
     ),
 
+    displaySmall = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.Normal,
+        fontSize = 36.sp,
+        lineHeight = 42.sp,
+        letterSpacing = 0.sp
+    ),
+
     displayMedium = TextStyle(
         fontFamily = Rubik,
         fontWeight = FontWeight.Bold,

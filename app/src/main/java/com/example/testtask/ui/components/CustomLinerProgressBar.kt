@@ -31,6 +31,11 @@ fun CustomProgressBar(
     {
         LinearProgressIndicator(
             progress = { progress },
+            color = progressColor,
+            trackColor = trackColor,
+            strokeCap = Butt,
+            gapSize = 0.dp,
+            drawStopIndicator = {},
             modifier = Modifier
                 .fillMaxWidth()
                 .height(height)
@@ -38,12 +43,7 @@ fun CustomProgressBar(
                 .border(
                     width = 1.dp,
                     color = BitterSweet,
-                    shape = CircleShape),
-            color = progressColor,
-            trackColor = trackColor,
-            strokeCap = Butt,
-            gapSize = 0.dp,
-            drawStopIndicator = {}
+                    shape = CircleShape)
         )
 
         Text(

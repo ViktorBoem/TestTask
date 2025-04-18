@@ -1,19 +1,19 @@
 package com.example.testtask.ui.feature_home
 
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.*
 import com.example.testtask.ui.feature_home.home_component.HomePageTopBar
 import androidx.compose.foundation.layout.*
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -23,19 +23,19 @@ import com.example.testtask.ui.components.PartialCircleBackground
 import com.example.testtask.ui.feature_home.home_component.CircleImageButtonWithGradient
 import com.example.testtask.ui.theme.*
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     onNavigateToPressureMeasurement : () -> Unit,
+    onNavigateToHistory : () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
-        topBar = { HomePageTopBar() },
+        topBar = { HomePageTopBar(onNavigateToHistory = onNavigateToHistory) },
         modifier = modifier
-    ) { innerPadding ->
+    ) { _ ->
         Column(
-            modifier = Modifier
-                .padding(top = innerPadding.calculateTopPadding())
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -58,7 +58,7 @@ fun HomeScreen(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.BottomCenter
                     ) {
                         Text(
                             text = "Виконайте своє перше вимірювання!",
@@ -70,15 +70,21 @@ fun HomeScreen(
 
                     Box(
                         modifier = Modifier
-                            .weight(2f)
+                            .weight(2.5f)
                             .fillMaxWidth(),
-                        contentAlignment = Alignment.TopCenter
+                        contentAlignment = Alignment.Center
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.heart_rate_red),
                             contentDescription = "Серце з пульсом",
                             contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxWidth(0.75f)
+                            modifier = Modifier
+                                .fillMaxWidth(0.8f)
+                                .align(
+                                    BiasAlignment(
+                                        horizontalBias = 0f,
+                                        verticalBias = -0.3f)
+                                )
                         )
                     }
                 }
